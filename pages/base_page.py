@@ -18,7 +18,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait as Wait
 from selenium.webdriver.support import expected_conditions as EC
 
-from pages.Capital.capital_locators import OnTrustLocators, Captcha
+# from pages.Capital.capital_locators import OnTrustLocators, Captcha
 from pages.common import Common
 
 # from src.src import (
@@ -150,58 +150,6 @@ class BasePage:
         self.driver.get(link)
         time.sleep(1)
         print(f"{datetime.now()}   => Loaded page {self.driver.current_url}")
-
-    @HandleExcElementsDecorator()
-    def button_accept_all_cookies_click(self):
-        allure.step(f"{datetime.now()}   Start Accepting all cookies")
-
-        time_out = 30
-        print(f"\n{datetime.now()}   Step 'Click button [Accept all cookies]'")
-
-        # self.is_captcha()
-
-        print(f"{datetime.now()}   Is Visible Button [Accept all cookies]? =>")
-        button = self.element_is_visible(OnTrustLocators.BUTTON_ACCEPT_ALL_COOKIE, time_out)
-        if not button:
-            print(f"{datetime.now()}   => Button [Accept all cookies] is not visible after {time_out} sec.")
-            print(f"{datetime.now()}   => Cur url = {self.driver.current_url}")
-            assert False, f"Button [Accept all cookies] is not visible after {time_out} sec."
-        else:
-            print(f"{datetime.now()}   => Button [Accept all cookies] is visible")
-
-        time.sleep(0.5)
-
-        print(f"{datetime.now()}   Is clickable Button [Accept all cookies] =>")
-        button = self.driver.find_element(*OnTrustLocators.BUTTON_ACCEPT_ALL_COOKIE)
-        button = self.element_is_clickable(button, time_out)
-        if not button:
-            print(f"{datetime.now()}   => Button [Accept all cookies] is not clickable after {time_out} sec.")
-            print(f"{datetime.now()}   => Cur url = {self.driver.current_url}")
-            assert False, f"Button [Accept all cookies] is not clickable after {time_out} sec."
-        else:
-            print(f"{datetime.now()}   => Button [Accept all cookies] is clickable")
-
-        print(f"{datetime.now()}   Click Button [Accept all cookies] =>")
-        button = self.driver.find_element(*OnTrustLocators.BUTTON_ACCEPT_ALL_COOKIE)
-        button.click()
-        print(f"{datetime.now()}   => Button [Accept all cookies] is clicked")
-        print(f"{datetime.now()}   => Accepted All Cookies")
-        time.sleep(0.5)
-
-    @allure.step(f"{datetime.now()}   Reject all cookies")
-    @HandleExcElementsDecorator()
-    def button_reject_all_cookies_click(self):
-        print(f"\n"
-              f"{datetime.now()}   Is visible BUTTON_REJECT_ALL_COOKIE? =>")
-        self.element_is_visible(OnTrustLocators.BUTTON_REJECT_ALL_COOKIE, 30)
-        print(f"{datetime.now()}   Find BUTTON_REJECT_ALL_COOKIE =>")
-        button = self.driver.find_element(*OnTrustLocators.BUTTON_REJECT_ALL_COOKIE)
-        print(f"{datetime.now()}   Is clickable BUTTON_REJECT_ALL_COOKIE? =>")
-        self.element_is_clickable(button, 30)
-        time.sleep(1)
-        print(f"{datetime.now()}   Click BUTTON_REJECT_ALL_COOKIE =>")
-        button.click()
-        print(f"{datetime.now()}   => Rejected All Cookies")
 
     @HandleExcElementsDecorator()
     def element_is_present(self, method, locator):
@@ -373,7 +321,7 @@ class BasePage:
     @HandleExcElementsDecorator()
     def element_is_clickable(self, loc_or_elem, timeout=1):
         """
-        Check that an element is present on the DOM of a page and enabled such that you can click it..
+        Check that an element is present on the DOM of a page and enabled such that you can click it.
         Visibility means that the element is not only displayed but also has a height and width that is greater than 0.
 
         Args:
@@ -620,23 +568,6 @@ class BasePage:
             EC.url_contains(link)
         )
 
-    @HandleExcElementsDecorator()
-    def is_captcha(self):
-        if self.elements_are_visible(Captcha.CAPTCHA_IFRAME, 1):
-            pytest.fail("Captcha on the page")
-
-    # def flatten(self, mylist):
-    #     """
-    #     Unpacks list of lists of elements into a single, flat list of elements
-    #
-    #     Args:
-    #         mylist: the list of the lists of WebElements.
-    #     Returns:
-    #         list[selenium.webdriver.remote.webelement.WebElement]: the list of WebElements.
-    #     """
-    #     return [item for sublist in mylist for item in sublist]
-    #
-
     def go_to_element(self, element):
         self.driver.execute_script(
             'return arguments[0].scrollIntoView({block: "center", inline: "nearest"});', element)
@@ -672,7 +603,7 @@ class BasePage:
             selenium.webdriver.remote.webelement.WebElement: returns the WebElement located
         """
         if locator[0] == By.XPATH:
-            new_locator = (locator[0], f'{locator[1]}[{number}]' )
+            new_locator = (locator[0], f'{locator[1]}[{number}]')
             return new_locator
         else:
             pass

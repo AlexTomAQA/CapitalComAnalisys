@@ -120,7 +120,7 @@ def cur_language(request):
             language = request.config.getoption("lang")
     else:
         language = request.param
-    print(f"Current test language - {"en" if language == "" else language}")
+    print(f"Current test language - {'en' if language == '' else language}")
     return language
 
 
@@ -287,7 +287,7 @@ def d(request):
     else:
         print(f'Please pass the correct browser name: {test_browser}')
         raise Exception('driver is not found')
-    print(f'Current browser name: {d.capabilities['browserName']}')
+    print(f'Current browser name: {d.capabilities["browserName"]}')
     # Установка максимального тайм-аута загрузки страницы
     d.set_page_load_timeout(60)
     yield d

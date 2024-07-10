@@ -34,7 +34,7 @@ class TestTradingView:
 
         # Act
         page_tv.search_markets(cur_rnd_trading_instrument)
-        # time.sleep(1)
+        time.sleep(1)
 
         # Assert
         place, qty = page_tv.get_place_for_broker(broker)
