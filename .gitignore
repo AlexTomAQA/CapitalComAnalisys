@@ -1,0 +1,43 @@
+.DS_Store
+__pycache__
+__init__.py
+.idea/
+/.pytest_cache/
+.run/
+.venv/
+.venv310/
+.venv311/
+.venv312/
+/.vscode/
+/.zed/
+/allure-report/
+/allure-results/
+/report/
+/My Code/
+/tests_examples/
+
+# /*/__pycache__/
+# /*/*/__pycache__/
+# /*/*/*/__pycache__/
+
+# /pages/__pycache__/
+# /pages/Education/__pycache__/
+# /pages/Markets/__pycache__/
+
+# /src/__pycharm__/
+
+# /test_data/__pycache__/
+
+# /tests/__pycache__/
+# /tests/Capital/__pycache__/
+# /tests/Education/__pycache__/
+# /tests/Markets/__pycache__/
+
+#tests/ReTestsAuto/token.json
+#tests/ReTestsAuto/credentials.json
+
+/tests/conftest.py
+qr_image.png
+geckodriver.log
+qodana.yaml
+#poetry.lock
