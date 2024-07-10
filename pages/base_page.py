@@ -4,7 +4,7 @@ import time
 import allure
 from datetime import datetime
 
-import pytest
+# import pytest
 from selenium.common.exceptions import (
     NoSuchElementException,
     TimeoutException,

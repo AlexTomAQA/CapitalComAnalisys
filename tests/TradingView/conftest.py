@@ -51,11 +51,11 @@ def cur_rnd_trading_instrument(request):
     params=[
         "File",
     ],
-    autouse=True,
+    # autouse=True,
 )
 def file(request):
     """File Initialization"""
-    file_name = "/Users/alekstom/Projects/CapitalComAnalisys/tests/TradingView/result.txt"
+    file_name = "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/result.txt"
     # file_name = "/tests/TradingView/result.txt"
     file = open(file_name, "w")
 

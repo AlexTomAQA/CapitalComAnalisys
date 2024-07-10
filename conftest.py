@@ -254,8 +254,8 @@ def cur_headless(request):
     # scope="module",
     scope="session",
     params=[
-        "Chrome",
-        # "Edge",
+        # "Chrome",
+        "Edge",
         # "Firefox",
         # "Safari",
     ],
