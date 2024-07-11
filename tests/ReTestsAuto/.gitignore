@@ -1,0 +1,6 @@
+.pytest_cache/
+__pycache__/
+allure-results/
+allure-report/
+report/
+temp.py
