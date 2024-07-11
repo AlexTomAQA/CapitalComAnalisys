@@ -10,16 +10,13 @@ import pytest
 
 @pytest.fixture(
     scope="function",
-    # params=random.sample([
     params=[
         "GOLD",
         "GBPUSD",
         "EURUSD",
         "NZDUSD",
-        "EURUSD",
         "USDJPY",
         "AUDUSD",
-        "GBPUSD",
         "USDCHF",
         "USDMXN",
         "EURGBP",
@@ -33,13 +30,11 @@ import pytest
         "US30",
         "UK100",
         "VIX",
-        "GOLD",
         "SILVER",
         "COPPER",
         "CORN",
         "WHEAT",
-        # ], 26),  # 26
-    ],  # 26
+    ],  # 23
 )
 def cur_rnd_trading_instrument(request):
     print(f"Current trading instrument - {request.param}\n")

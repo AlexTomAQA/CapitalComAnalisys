@@ -1,14 +1,14 @@
-"""
+""""
 -*- coding: utf-8 -*-
-@Time    : 2023/01/27 10:00
+@Time    : 2024/07/05 22:00
 @Author  : Alexander Tomelo
 """
-import sys
+# import sys
 import os
 from datetime import datetime
-import re
-import platform
-import random
+# import re
+# import platform
+# import random
 
 import pytest
 import allure
@@ -23,239 +23,13 @@ from allure_commons.types import AttachmentType
 
 import conf
 
-QTY_Lang = 2
-
-
-def pytest_addoption(parser):
-    # проверка аргументов командной строки
-    parser.addoption('--retest', action='store', default=False,
-                     help="Re-Testing: '--retest=True'")
-
-    parser.addoption('--browser_name', action='store', default=False,
-                     help="Choose browser: '--browser_name=Chrome' or '--browser_name=Edge'")
-
-    parser.addoption('--lang', action='store', default=False,
-                     help="Choose language: '--lang='en' for 'en'")
-
-    parser.addoption('--country', action='store', default=False,
-                     help="Choose License: '--country=ae'")
-
-    parser.addoption('--role', action='store', default=False,
-                     help="Choose Role: --role=NoAuth'")
-
-    parser.addoption('--tpi_link', action='store', default=False,
-                     help="cur_item_link: '--tpi_link=https://capital.com/fr/trading-amazon'")
-
-    parser.addoption('--os', action='store', default=False,
-                     help="os: '--os=U22'")
-
-
-"""
-пример командной строки для автотестов: --retest=True --browser_name=Chrome --lang='' --country=ae --role=Auth
-    --tpi_link=https://capital.com/fr/trading-amazon --os=U22 -m test_02 --no-summary -v
-    tests/US_11_Education/US_11-02-02_Shares_trading/US_11-02-02-01_Shares_trading_test.py
-#########  
-пример командной строки для тестов:--browser_name=Chrome --lang='en' --country=ae --role=Auth --os=U22 
--m test_02 --no-summary -vs tests/US_11_Education/US_11-02-02_Shares_trading/US_11-02-02-01_Shares_trading_test.py
-!!! порядок расположение аргументов не имеет значения
-"""
-
-role_list = list()
-input_list = sys.argv
-search_value = "--role"
-pattern = re.compile(f'{search_value}=(\\S+)')
-
-for item in input_list:
-    match = pattern.search(item)
-    if match:
-        role_list = (match.group(1),)
-        break
-else:
-    role_list = (
-        "NoReg",
-        "Auth",
-        "NoAuth",  # "Reg/NoAuth"
-    )
-
-
-@pytest.fixture(
-    scope="class",
-    params=[*role_list],
-)
-def cur_role(request):
-    """Fixture"""
-    # проверка аргументов командной строки
-    cur_role = request.param
-    print(f"Current test role - {cur_role}\n")
-    return cur_role
-
-
-# Language parameter
-@pytest.fixture(
-    scope="class",
-    params=[
-        "",  # "en" - 21 us
-        # "ar",  # 8 us
-        # "de",  # 15 us
-        # "es",  # 20 us
-        # "it",  # 15 us
-        # "ru",  # 15 us
-        # "cn",  # 13 us Education to trade present, financial glossary not present
-        # "zh",  # 12 us
-        # "fr",  # 11 us
-        # "pl",  # 10 us
-        # "ro",  # 10 us
-        # "nl",  # 8 us
-        # "el",  # 5 us
-        # "hu",  # 5 us Magyar
-    ],
-)
-def cur_language(request):
-    """Fixture"""
-    # проверка аргументов командной строки
-    if request.config.getoption("lang"):
-        if request.config.getoption("lang") == "en":
-            language = ""
-        else:
-            language = request.config.getoption("lang")
-    else:
-        language = request.param
-    print(f"Current test language - {'en' if language == '' else language}")
-    return language
-
-
-# Country/License parameter
-@pytest.fixture(
-    scope="class",
-    params=[
-        # "gb",  # Great Britain /          "FCA" - New layout
-        "ae",  # United Arab Emirates /   "SCA" - New layout
-        #
-        # "de",  # Germany  - "CYSEC"
-        # "au",  # Australia - "ASIC"
-        # "ua",  # Ukraine - "SCB"
-        #
-        # "gr",  # Greece - "CYSEC"
-        # "es",  # Spain - "CYSEC"
-        # "fr",  # France - "CYSEC"
-        # "it",  # Italy - "CYSEC"
-        # "hu",  # Hungary - "CYSEC"
-        # "nl",  # Netherlands - "CYSEC"
-        # "pl",  # Poland - "CYSEC"
-        # "ro",  # Romania - "CYSEC"
-        # "uz",  # Uzbekistan - "SCB"
-        # "tw",  # Taiwan - "SCB"
-        # "hk",  # Hong Kong - "SCB"
-
-        # # "ru" - not support
-        # "NBRB" - not support
-        # "SFB",
-        # "FSA"
-    ],
-)
-def cur_country(request):
-    """Fixture"""
-    # проверка аргументов командной строки
-    if request.config.getoption("country"):
-        country = request.config.getoption("country")
-    else:
-        country = request.param
-    print(f"Current country of trading - {country}")
-    return country
-
-
-@pytest.fixture(
-    scope="class",
-    params=[
-        "test001.miketar+1@gmail.com"
-        # "aqa.tomelo.an@gmail.com"  # для локального тестирования у Саши
-    ],
-)
-def cur_login(request):
-    """Fixture"""
-    print(f"Current login - {request.param}")
-    return request.param
-
-
-@pytest.fixture(
-    scope="class",
-    params=[
-        "Qwer1234-!@#$"
-        # "iT9Vgqi6d$fiZ*Z"  # для локального тестирования у Саши
-    ],
-)
-def cur_password(request):
-    """Fixture"""
-    print(f"Current password - {request.param}")
-    return request.param
-
-
-@pytest.fixture(
-    scope="function",
-    params=random.sample([
-        "",
-        "ar",
-        "de",
-        "es",
-        "it",
-        "ru",
-        "cn",
-        "zh",
-        "fr",
-        "pl",
-        "ro",
-        "nl",
-        "el",
-        "hu",
-    ], QTY_Lang),
-)
-def cur_language_qty_rnd_from_14(request):
-    return request.param
-
-
-@pytest.fixture(
-    scope="session",
-    params=[
-        # 'W22',
-        # 'W10',
-        # 'W11',
-        # 'M14',
-        'U22',
-    ],
-)
-def cur_os(request):
-    """Fixture"""
-    # проверка аргументов командной строки
-    if request.config.getoption("os"):
-        test_os = request.config.getoption("os")
-    else:
-        test_os = request.param
-    # os_info = platform.system()
-    # os_version = platform.version()
-    platform_v = platform.platform()
-    print(f"Current OS - {platform_v}")
-    return test_os
-
-
-@pytest.fixture(
-    scope="session",
-    params=[
-        True,
-        # False
-    ],
-)
-def cur_headless(request):
-    """Fixture"""
-    print(f"Current Headless - {request.param}")
-    return request.param
-
 
 @pytest.fixture(
     # scope="module",
     scope="session",
     params=[
-        # "Chrome",
-        "Edge",
+        "Chrome",
+        # "Edge",
         # "Firefox",
         # "Safari",
     ],
