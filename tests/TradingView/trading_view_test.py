@@ -18,7 +18,7 @@ broker = "CAPITALCOM"
 
 class TestTradingView:
 
-    def test_analisys(self, d, cur_rnd_trading_instrument, file):
+    def test_analisys(self, d, cur_trading_instrument, file):
         """
         Полный алгоритм действий с полученным TI
         """
@@ -33,13 +33,13 @@ class TestTradingView:
             page_tv.go_to_search_markets_here()
 
         # Act
-        page_tv.search_markets(cur_rnd_trading_instrument)
+        page_tv.search_markets(cur_trading_instrument)
         time.sleep(1)
 
         # Assert
         place, qty = page_tv.get_place_for_broker(broker)
         file.write(f"{datetime.now()}\t"
-                   f"{cur_rnd_trading_instrument}:\t\t"
+                   f"{cur_trading_instrument}:\t\t"
                    f"{broker} занимает {place} место из {qty}\n")
 
         print(f"{broker} занимает {place} место из {qty}")
