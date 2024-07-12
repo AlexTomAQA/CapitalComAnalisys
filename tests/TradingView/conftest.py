@@ -36,7 +36,7 @@ import pytest
         "WHEAT",
     ],  # 23
 )
-def cur_rnd_trading_instrument(request):
+def cur_trading_instrument(request):
     print(f"Current trading instrument - {request.param}\n")
     return request.param
 
@@ -51,7 +51,7 @@ def cur_rnd_trading_instrument(request):
 def file(request):
     """File Initialization"""
     file_name = "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/result.txt"
-    # file_name = "/tests/TradingView/result.txt"
+    # file_name = "tests/TradingView/result.txt"
     file = open(file_name, "w")
 
     yield file

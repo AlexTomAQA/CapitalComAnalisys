@@ -9,15 +9,15 @@ QTY_LINKS = 1
 HEADLESS = True  # режим браузера без отображения (безголовый)
 # HEADLESS = False  # режим с отображением браузера
 
-CHROME_WINDOW_SIZES = "--window-size=1280,720"
-# CHROME_WINDOW_SIZES = "--window-size=1920,1080"
-CHROME_WINDOW_SIZES_4k = "--window-size=3440,1440"
+# CHROME_WINDOW_SIZES = "--window-size=1280,720"
+CHROME_WINDOW_SIZES = "--window-size=1920,1080"
+# CHROME_WINDOW_SIZES_4k = "--window-size=3440,1440"
 # HEADLESS = "--headless"  # not visible
 
 # EDGE_WINDOW_SIZES = "--window-size=1280,720"
 # EDGE_WINDOW_SIZES = "--window-size=1920,1080"
-EDGE_WINDOW_SIZES = (1280, 720)
-# EDGE_WINDOW_SIZES = (1920, 1080)
+# EDGE_WINDOW_SIZES = (1280, 720)
+EDGE_WINDOW_SIZES = (1920, 1080)
 
 FIREFOX_WINDOW_WIDTH = "--width=1280"
 FIREFOX_WINDOW_HEIGHT = "--height=720"

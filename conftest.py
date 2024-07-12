@@ -24,6 +24,30 @@ from allure_commons.types import AttachmentType
 import conf
 
 
+def pytest_addoption(parser):
+    # проверка аргументов командной строки
+    parser.addoption('--retest', action='store', default=False,
+                     help="Re-Testing: '--retest=True'")
+
+    parser.addoption('--browser_name', action='store', default=False,
+                     help="Choose browser: '--browser_name=Chrome' or '--browser_name=Edge'")
+
+    parser.addoption('--lang', action='store', default=False,
+                     help="Choose language: '--lang='en' for 'en'")
+
+    parser.addoption('--country', action='store', default=False,
+                     help="Choose License: '--country=ae'")
+
+    parser.addoption('--role', action='store', default=False,
+                     help="Choose Role: --role=NoAuth'")
+
+    parser.addoption('--tpi_link', action='store', default=False,
+                     help="cur_item_link: '--tpi_link=https://capital.com/fr/trading-amazon'")
+
+    parser.addoption('--os', action='store', default=False,
+                     help="os: '--os=U22'")
+
+
 @pytest.fixture(
     # scope="module",
     scope="session",
