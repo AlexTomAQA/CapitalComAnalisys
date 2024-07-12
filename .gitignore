@@ -5,16 +5,16 @@ __init__.py
 /.pytest_cache/
 .run/
 .venv/
-.venv310/
-.venv311/
-.venv312/
-/.vscode/
-/.zed/
 /allure-report/
 /allure-results/
 /report/
-/My Code/
-/tests_examples/
+
+#.venv310/
+#.venv311/
+#.venv312/
+#/.vscode/
+#/.zed/
+#/My Code/
 
 # /*/__pycache__/
 # /*/*/__pycache__/
@@ -37,7 +37,5 @@ __init__.py
 #tests/ReTestsAuto/credentials.json
 
 /tests/conftest.py
-qr_image.png
-geckodriver.log
-qodana.yaml
-#poetry.lock
+tests/TradingView/result.txt
+poetry.lock
