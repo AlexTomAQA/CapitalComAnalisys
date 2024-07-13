@@ -15,9 +15,8 @@ from pages.GoogleSheets.googlesheets import GoogleSheet
 
 page_tr_v = None
 broker = "CAPITALCOM"
-start_column = "B"
 new_row = "4"
-cur_column = start_column
+cur_column = "B"
 
 
 class TestTradingView:
@@ -27,7 +26,6 @@ class TestTradingView:
         Полный алгоритм действий с полученным TI
         """
         global page_tr_v
-        global start_column
         global new_row
         global cur_column
 
