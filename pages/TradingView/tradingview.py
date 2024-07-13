@@ -65,6 +65,7 @@ class TradingView(BasePage):
 
     def search_markets(self, ti):
         button = self.driver.find_element(*TradingViewSiteLocators.CLEAR_BUTTON)
+
         button.click()
 
         buttons = self.driver.find_elements(*TradingViewSiteLocators.SEARCH_TEXT_BOX)
