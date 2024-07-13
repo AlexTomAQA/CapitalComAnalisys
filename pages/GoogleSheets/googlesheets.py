@@ -1,7 +1,7 @@
 """
 -*- coding: utf-8 -*-
-@Time    : 18/12/2023
-@Author  : Mike Taran
+@Time    : 05/07/2024
+@Author  : Alexander Tomelo
 """
 
 import os.path
@@ -18,9 +18,9 @@ from googleapiclient.errors import HttpError
 
 # The ID and range of a spreadsheet.
 
-SPREADSHEET_ID1 = "1jG0hdjrUdjMFBYHXyBKRGbBwV0ICxfBPaBkgB98Nuuk"  # auto tests
-# SPREADSHEET_ID = "1XyKqXEib1-2ZlpEXnr85--XhHZSPOODWkQJe5XW0YbA"     # copy for debugging
-SPREADSHEET_ID2 = "1oSNjS0UufE8KZQCfkXrvbR0s0m_aw6OfVBn0RPOup14"  # manual tests
+# PATH_PROJECT = ""
+PATH_PROJECT = "/home/atom/Project/CapitalComAnalisys"
+SPREADSHEET_ID = "1ssLb5gFzDUwWEjJZhUggls-uyAIysNeajW7p0hdZY8E"  # Place of Capital.Com in the traders top list
 
 
 class GoogleSheet:
@@ -33,8 +33,8 @@ class GoogleSheet:
     # If modifying these scopes, delete the file token.json.
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-    SHEET_NAME = 'BugsReport'
-    SHEET_ID = '540090404'
+    SHEET_NAME = 'Analisys'
+    SHEET_ID = '0'
     service = None
 
     def __new__(cls, *args, **kwargs):
@@ -42,16 +42,18 @@ class GoogleSheet:
             cls.__instance = super().__new__(cls)
         return cls.__instance
 
-    def __init__(self, spreadsheet_id=None):
+    def __init__(self):
         self.creds = None
-        self.manual = False
-        # self.SPREADSHEET_ID = spreadsheet_id or self.SPREADSHEET_ID1
-        if not spreadsheet_id:
-            spreadsheet_id = SPREADSHEET_ID1
-        self.SPREADSHEET_ID = spreadsheet_id
+        self.SPREADSHEET_ID = SPREADSHEET_ID
 
-        if os.path.exists("./tests/ReTestsAuto/token.json"):
-            self.creds = Credentials.from_authorized_user_file("./tests/ReTestsAuto/token.json", self.SCOPES)
+        if os.path.exists(
+                # PATH_PROJECT + "/tests/TradingView/Analisys/token.json"
+                "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/Analisys/token.json"
+        ):
+            self.creds = Credentials.from_authorized_user_file(
+                # PATH_PROJECT + "/tests/TradingView/Analisys/token.json",
+                "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/Analisys/token.json",
+                self.SCOPES)
 
         if not self.creds or not self.creds.valid:
             if self.creds and self.creds.expired and self.creds.refresh_token:
@@ -59,10 +61,15 @@ class GoogleSheet:
             else:
                 print('flow')
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    "./tests/ReTestsAuto/credentials.json", self.SCOPES
+                    "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/Analisys/credentials.json",
+                    # PATH_PROJECT + "/tests/TradingView/Analisys/credentials.json",
+                    self.SCOPES
                 )
                 self.creds = flow.run_local_server(port=0)
-            with open("./tests/ReTestsAuto/token.json", "w") as token:
+            with open(
+                    # PATH_PROJECT + "/tests/TradingView/Analisys/token.json",
+                    "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/Analisys/token.json",
+                    "w") as token:
                 token.write(self.creds.to_json())
 
         try:
