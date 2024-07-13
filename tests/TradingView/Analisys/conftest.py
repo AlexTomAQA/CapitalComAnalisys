@@ -4,8 +4,12 @@
 @Author  : AlexTomQA
 """
 
-import pytest
+from datetime import datetime
 # import random
+
+import pytest
+
+from pages.GoogleSheets.googlesheets import GoogleSheet
 
 
 @pytest.fixture(
@@ -42,11 +46,41 @@ def cur_trading_instrument(request):
 
 
 @pytest.fixture(
+    scope="session",
+    # autouse=True
+)
+def gs():
+    print(f"\n{datetime.now()}   *** start fixture gs => setup ***\n")
+    """Start execution program"""
+
+    g_sheet = GoogleSheet()
+
+    # старт парсинга
+    gs_out = ['Parsing now']
+    g_sheet.update_range_values('A1', [gs_out])
+    # надо вставить строку
+
+    # надо вписать временной штамп
+    start_analisys_date_time = [datetime.now().strftime("%d/%m/%Y %H:%M:%S")]
+    g_sheet.update_range_values('A4', [start_analisys_date_time])
+
+    yield g_sheet
+
+    # окончание парсинг
+    gs_out = ['Last analisys']
+    g_sheet.update_range_values('A1', [gs_out])
+    end_analisys_date_time = [datetime.now().strftime("%d/%m/%Y %H:%M:%S")]
+    g_sheet.update_range_values('C1', [end_analisys_date_time])
+
+    del g_sheet
+    print(f"\n{datetime.now()}   *** end fixture gs => teardown ***\n")
+
+
+@pytest.fixture(
     scope="module",
     params=[
         "File",
     ],
-    # autouse=True,
 )
 def file(request):
     """File Initialization"""
