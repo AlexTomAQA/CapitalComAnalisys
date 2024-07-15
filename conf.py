@@ -5,6 +5,7 @@
 """
 DEBUG = False
 QTY_LINKS = 1
+LOC_PATH_PROJECT = "/home/atom/Projects/CapitalComAnalisys/"
 
 HEADLESS = True  # режим браузера без отображения (безголовый)
 # HEADLESS = False  # режим с отображением браузера
