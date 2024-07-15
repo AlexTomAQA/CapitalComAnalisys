@@ -7,6 +7,7 @@ from datetime import datetime
 
 import allure
 import pytest
+from selenium.webdriver.common.by import By
 # from selenium import webdriver
 
 from pages.base_page import BasePage
@@ -16,15 +17,15 @@ from test_data.tradingview_site_data import data
 
 class TradingViewSiteLocators:
     APP_TITLE = ('css selector', '.tv-profile-header__username')
-    BUTTON_SEARCH_MARKETS_HERE = ("css selector", "button.searchBar-PCujdK9L")
-    SEARCH_TEXT_BOX = ("css selector", 'input[inputmode="search"]')
-    CLEAR_BUTTON = ("css selector", "button.clearButton-KLRTYDjH")
-    BROKER_LIST = ("css selector", ".itemRow-oRSs8UQo .exchangeName-oRSs8UQo")
+    BUTTON_SEARCH_MARKETS_HERE = (By.CSS_SELECTOR, "button.searchBar-PCujdK9L")
+    SEARCH_TEXT_BOX = (By.CSS_SELECTOR, 'input[inputmode="search"]')
+    CLEAR_BUTTON = (By.CSS_SELECTOR, "button.clearButton-KLRTYDjH")
+    BROKER_LIST = (By.CSS_SELECTOR, ".itemRow-oRSs8UQo .exchangeName-oRSs8UQo")
 
 
 class TradingView(BasePage):
     @allure.step("Checking that the TradingView site has opened")
-    def should_be_tradingview_page(self, d):
+    def should_be_tradingview_page(self):
         """Check if the page is open"""
         print(f"{datetime.now()}   Checking that the TradingView page has opened =>")
         if self.current_page_url_contain_the(data["SITE_URL"]):
@@ -64,8 +65,11 @@ class TradingView(BasePage):
         return True
 
     def search_markets(self, ti):
-        button = self.driver.find_element(*TradingViewSiteLocators.CLEAR_BUTTON)
+        if not self.element_is_visible(TradingViewSiteLocators.CLEAR_BUTTON, 5):
+            print("Проблема с кнопкой очистки строки поиска")
+            return False
 
+        button = self.driver.find_element(*TradingViewSiteLocators.CLEAR_BUTTON)
         button.click()
 
         buttons = self.driver.find_elements(*TradingViewSiteLocators.SEARCH_TEXT_BOX)
