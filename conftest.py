@@ -26,6 +26,9 @@ import conf
 
 def pytest_addoption(parser):
     # проверка аргументов командной строки
+    parser.addoption("--env", action='store', default=False,
+                     help="environment: --env=github")
+
     parser.addoption('--retest', action='store', default=False,
                      help="Re-Testing: '--retest=True'")
 
@@ -46,6 +49,24 @@ def pytest_addoption(parser):
 
     parser.addoption('--os', action='store', default=False,
                      help="os: '--os=U22'")
+
+
+@pytest.fixture(
+    scope="session",
+    params=[
+        "loc",  # locally runing
+    ],
+)
+def cur_env(request):
+    """Fixture"""
+    # проверка аргументов командной строки
+    if request.config.getoption("env"):
+        if request.config.getoption("anv") == "github":
+            env = "github"
+    else:
+        env = request.param
+    print(f"Current test environment - {env}")
+    return env
 
 
 @pytest.fixture(
