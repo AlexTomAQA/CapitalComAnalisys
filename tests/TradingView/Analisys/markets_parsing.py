@@ -11,7 +11,7 @@ import time
 # from selenium.common.exceptions import ElementClickInterceptedException
 from pages.base_page import BasePage
 from pages.TradingView.trading_view import TradingView
-from pages.GoogleSheets.googlesheets import GoogleSheet
+# from pages.GoogleSheets.googlesheets import GoogleSheet
 
 page_tr_v = None
 broker = "CAPITALCOM"
@@ -21,7 +21,7 @@ cur_column = "B"
 
 class TestTradingView:
 
-    def test_analisys(self, d, gs, cur_trading_instrument, file):
+    def test_parsing(self, d, gs, cur_env, cur_trading_instrument, file):
         """
         Полный алгоритм действий с полученным TI
         """

@@ -21,6 +21,7 @@ class TradingViewSiteLocators:
     SEARCH_TEXT_BOX = (By.CSS_SELECTOR, 'input[inputmode="search"]')
     CLEAR_BUTTON = (By.CSS_SELECTOR, "button.clearButton-KLRTYDjH")
     BROKER_LIST = (By.CSS_SELECTOR, ".itemRow-oRSs8UQo .exchangeName-oRSs8UQo")
+    LIST_ALL_BROKERS = (By.CSS_SELECTOR, ".listContainer-dlewR1s1")
 
 
 class TradingView(BasePage):
@@ -54,6 +55,12 @@ class TradingView(BasePage):
         print(f"{datetime.now()}   => The app title has expected title.\n")
 
     def go_to_search_markets_here(self):
+
+        if not self.element_is_visible(TradingViewSiteLocators.BUTTON_SEARCH_MARKETS_HERE, 15):
+            msg = "Проблема с главной кнопкой SEARCH MARKETS"
+            print(msg)
+            pytest.fail(msg)
+
         buttons = self.driver.find_elements(*TradingViewSiteLocators.BUTTON_SEARCH_MARKETS_HERE)
         if len(buttons) == 0:
             msg = "Нет кнопки Поиска Рынка"
@@ -61,6 +68,11 @@ class TradingView(BasePage):
             pytest.fail(msg)
 
         buttons[0].click()
+
+        if not self.element_is_visible(TradingViewSiteLocators.LIST_ALL_BROKERS, 15):
+            msg = "Проблема со списком Брокеров"
+            print(msg)
+            pytest.fail(msg)
 
         return True
 

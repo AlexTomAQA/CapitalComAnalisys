@@ -13,6 +13,24 @@ from pages.GoogleSheets.googlesheets import GoogleSheet
 
 
 @pytest.fixture(
+    scope="session",
+    params=[
+        "loc",  # locally runing
+    ],
+)
+def cur_env(request):
+    """Fixture"""
+    # проверка аргументов командной строки
+    if request.config.getoption("env"):
+        if request.config.getoption("anv") == "github":
+            env = "github"
+    else:
+        env = request.param
+    print(f"Current test environment - {env}")
+    return env
+
+
+@pytest.fixture(
     scope="function",
     params=[
         "GOLD",
@@ -47,21 +65,24 @@ def cur_trading_instrument(request):
 
 @pytest.fixture(
     scope="session",
-    autouse=True
+    # autouse=True
 )
-def gs():
+def gs(cur_env):
     print(f"\n{datetime.now()}   *** start fixture gs => setup ***\n")
     """Start execution program"""
 
-    g_sheet = GoogleSheet()
+    g_sheet = GoogleSheet(cur_env)
 
     # старт парсинга
     gs_out = ['Parsing now']
     g_sheet.update_range_values('A1', [gs_out])
+
     end_analisys_date_time = ['']
     g_sheet.update_range_values('C1', [end_analisys_date_time])
+
     # надо вставить строку
     g_sheet.add_new_row_before_(4)
+
     # надо вписать временной штамп
     start_analisys_date_time = [datetime.now().strftime("%d/%m/%Y %H:%M:%S")]
     g_sheet.update_range_values('A4', [start_analisys_date_time])

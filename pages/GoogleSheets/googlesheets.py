@@ -19,7 +19,7 @@ from googleapiclient.errors import HttpError
 # The ID and range of a spreadsheet.
 
 # PATH_PROJECT = ""
-PATH_PROJECT = "/home/atom/Project/CapitalComAnalisys"
+PATH_PROJECT = "/home/atom/Projects/CapitalComAnalisys/"
 SPREADSHEET_ID = "1ssLb5gFzDUwWEjJZhUggls-uyAIysNeajW7p0hdZY8E"  # Place of Capital.Com in the traders top list
 
 
@@ -42,17 +42,17 @@ class GoogleSheet:
             cls.__instance = super().__new__(cls)
         return cls.__instance
 
-    def __init__(self):
+    def __init__(self, env):
         self.creds = None
         self.SPREADSHEET_ID = SPREADSHEET_ID
-
+        self.path_project = ""
+        if env == 'loc':
+            self.path_project = PATH_PROJECT
         if os.path.exists(
-                # PATH_PROJECT + "/tests/TradingView/Analisys/token.json"
-                "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/Analisys/token.json"
+                self.path_project + "tests/TradingView/Analisys/token.json"
         ):
             self.creds = Credentials.from_authorized_user_file(
-                # PATH_PROJECT + "/tests/TradingView/Analisys/token.json",
-                "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/Analisys/token.json",
+                self.path_project + "tests/TradingView/Analisys/token.json",
                 self.SCOPES)
 
         if not self.creds or not self.creds.valid:
@@ -61,14 +61,12 @@ class GoogleSheet:
             else:
                 print('flow')
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/Analisys/credentials.json",
-                    # PATH_PROJECT + "/tests/TradingView/Analisys/credentials.json",
+                    self.path_project + "tests/TradingView/Analisys/credentials.json",
                     self.SCOPES
                 )
                 self.creds = flow.run_local_server(port=0)
             with open(
-                    # PATH_PROJECT + "/tests/TradingView/Analisys/token.json",
-                    "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/Analisys/token.json",
+                    self.path_project + "tests/TradingView/Analisys/token.json",
                     "w") as token:
                 token.write(self.creds.to_json())
 
@@ -127,19 +125,19 @@ class GoogleSheet:
     def update_range_values(self, cell, values=""):
         if values == "":
             values = [[""]]
+
         range_name = f'{self.SHEET_NAME}!{cell}'
         data = [{
             'range': range_name,
             'values': values
         }]
+
         body = {
             'valueInputOption': 'USER_ENTERED',
             'data': data
         }
-        result = (self.service.spreadsheets().values().
-                  batchUpdate(spreadsheetId=self.SPREADSHEET_ID, body=body)
-                  .execute()
-                  )
+
+        result = self.service.spreadsheets().values().batchUpdate(spreadsheetId=self.SPREADSHEET_ID, body=body).execute()
         print('{0} cells updated.'.format(result.get('totalUpdatedCells')))
         print(f"{datetime.now()}   => One row check results into Google Sheet Bugs Report fixed")
         return result
@@ -241,7 +239,7 @@ class GoogleSheet:
                             'sheetId': self.SHEET_ID,
                             'dimension': 'ROWS',
                             'startIndex': index_of_row - 1,
-                            'endIndex': index_of_row  # Вставляем перед строкой 5
+                            'endIndex': index_of_row  # Вставляем перед строкой
                         }
                     }
                 }]
