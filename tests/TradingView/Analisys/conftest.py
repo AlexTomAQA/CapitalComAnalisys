@@ -47,7 +47,7 @@ def cur_trading_instrument(request):
 
 @pytest.fixture(
     scope="session",
-    # autouse=True
+    autouse=True
 )
 def gs():
     print(f"\n{datetime.now()}   *** start fixture gs => setup ***\n")
@@ -58,8 +58,10 @@ def gs():
     # старт парсинга
     gs_out = ['Parsing now']
     g_sheet.update_range_values('A1', [gs_out])
+    end_analisys_date_time = ['']
+    g_sheet.update_range_values('C1', [end_analisys_date_time])
     # надо вставить строку
-
+    g_sheet.add_new_row_before_(4)
     # надо вписать временной штамп
     start_analisys_date_time = [datetime.now().strftime("%d/%m/%Y %H:%M:%S")]
     g_sheet.update_range_values('A4', [start_analisys_date_time])
@@ -67,7 +69,7 @@ def gs():
     yield g_sheet
 
     # окончание парсинг
-    gs_out = ['Last analisys']
+    gs_out = ['Last parsing']
     g_sheet.update_range_values('A1', [gs_out])
     end_analisys_date_time = [datetime.now().strftime("%d/%m/%Y %H:%M:%S")]
     g_sheet.update_range_values('C1', [end_analisys_date_time])

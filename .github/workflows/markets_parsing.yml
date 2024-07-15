@@ -3,8 +3,8 @@ name: Parsing markets
 on:
 #  push:
   workflow_dispatch:
-#  schedule:
-#    - cron: '00 13 * * *'
+  schedule:
+    - cron: '00 10 * * *'
 #    - cron: '10 06 * * *'
 
 jobs:

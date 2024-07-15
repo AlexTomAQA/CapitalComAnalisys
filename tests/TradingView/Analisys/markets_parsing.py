@@ -10,7 +10,7 @@ import time
 # import allure
 # from selenium.common.exceptions import ElementClickInterceptedException
 from pages.base_page import BasePage
-from pages.TradingView.tradingview import TradingView
+from pages.TradingView.trading_view import TradingView
 from pages.GoogleSheets.googlesheets import GoogleSheet
 
 page_tr_v = None
