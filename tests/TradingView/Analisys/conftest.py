@@ -22,7 +22,7 @@ def cur_env(request):
     """Fixture"""
     # проверка аргументов командной строки
     if request.config.getoption("env"):
-        if request.config.getoption("anv") == "github":
+        if request.config.getoption("env") == "github":
             env = "github"
     else:
         env = request.param
