@@ -127,19 +127,19 @@ class GoogleSheet:
     def update_range_values(self, cell, values=""):
         if values == "":
             values = [[""]]
+
         range_name = f'{self.SHEET_NAME}!{cell}'
         data = [{
             'range': range_name,
             'values': values
         }]
+
         body = {
             'valueInputOption': 'USER_ENTERED',
             'data': data
         }
-        result = (self.service.spreadsheets().values().
-                  batchUpdate(spreadsheetId=self.SPREADSHEET_ID, body=body)
-                  .execute()
-                  )
+
+        result = self.service.spreadsheets().values().batchUpdate(spreadsheetId=self.SPREADSHEET_ID, body=body).execute()
         print('{0} cells updated.'.format(result.get('totalUpdatedCells')))
         print(f"{datetime.now()}   => One row check results into Google Sheet Bugs Report fixed")
         return result
@@ -241,7 +241,7 @@ class GoogleSheet:
                             'sheetId': self.SHEET_ID,
                             'dimension': 'ROWS',
                             'startIndex': index_of_row - 1,
-                            'endIndex': index_of_row  # Вставляем перед строкой 5
+                            'endIndex': index_of_row  # Вставляем перед строкой
                         }
                     }
                 }]
