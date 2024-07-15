@@ -9,6 +9,7 @@ from datetime import datetime
 
 import pytest
 
+from conf import LOC_PATH_PROJECT
 from pages.GoogleSheets.googlesheets import GoogleSheet
 
 
@@ -105,10 +106,13 @@ def gs(cur_env):
         "File",
     ],
 )
-def file(request):
+def file(request, cur_env):
     """File Initialization"""
-    file_name = "/home/atom/Projects/CapitalComAnalisys/tests/TradingView/result.txt"
-    # file_name = "tests/TradingView/result.txt"
+    path_project = ""
+    if cur_env == 'loc':
+        path_project = LOC_PATH_PROJECT
+
+    file_name = path_project + "tests/TradingView/result.txt"
     file = open(file_name, "w")
 
     yield file

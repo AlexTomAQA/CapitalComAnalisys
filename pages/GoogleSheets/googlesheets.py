@@ -16,10 +16,11 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from conf import LOC_PATH_PROJECT
 # The ID and range of a spreadsheet.
 
 # PATH_PROJECT = ""
-PATH_PROJECT = "/home/atom/Projects/CapitalComAnalisys/"
+# PATH_PROJECT = "/home/atom/Projects/CapitalComAnalisys/"
 SPREADSHEET_ID = "1ssLb5gFzDUwWEjJZhUggls-uyAIysNeajW7p0hdZY8E"  # Place of Capital.Com in the traders top list
 
 
@@ -47,7 +48,7 @@ class GoogleSheet:
         self.SPREADSHEET_ID = SPREADSHEET_ID
         self.path_project = ""
         if env == 'loc':
-            self.path_project = PATH_PROJECT
+            self.path_project = LOC_PATH_PROJECT
         if os.path.exists(
                 self.path_project + "tests/TradingView/Analisys/token.json"
         ):
