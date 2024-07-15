@@ -21,7 +21,7 @@ cur_column = "B"
 
 class TestTradingView:
 
-    def test_analisys(self, d, gs, cur_trading_instrument, file):
+    def test_analisys(self, d, gs, cur_env, cur_trading_instrument, file):
         """
         Полный алгоритм действий с полученным TI
         """
