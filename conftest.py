@@ -29,44 +29,11 @@ def pytest_addoption(parser):
     parser.addoption("--env", action='store', default=False,
                      help="environment: --env=github")
 
-    parser.addoption('--retest', action='store', default=False,
-                     help="Re-Testing: '--retest=True'")
-
     parser.addoption('--browser_name', action='store', default=False,
                      help="Choose browser: '--browser_name=Chrome' or '--browser_name=Edge'")
 
-    parser.addoption('--lang', action='store', default=False,
-                     help="Choose language: '--lang='en' for 'en'")
-
-    parser.addoption('--country', action='store', default=False,
-                     help="Choose License: '--country=ae'")
-
-    parser.addoption('--role', action='store', default=False,
-                     help="Choose Role: --role=NoAuth'")
-
-    parser.addoption('--tpi_link', action='store', default=False,
-                     help="cur_item_link: '--tpi_link=https://capital.com/fr/trading-amazon'")
-
-    parser.addoption('--os', action='store', default=False,
-                     help="os: '--os=U22'")
-
-
-@pytest.fixture(
-    scope="session",
-    params=[
-        "loc",  # locally runing
-    ],
-)
-def cur_env(request):
-    """Fixture"""
-    # проверка аргументов командной строки
-    if request.config.getoption("env"):
-        if request.config.getoption("anv") == "github":
-            env = "github"
-    else:
-        env = request.param
-    print(f"Current test environment - {env}")
-    return env
+    parser.addoption('--trader', action='store', default=False,
+                     help="Choose Trader: '--trader=CAPITALCOM'")
 
 
 @pytest.fixture(
@@ -78,7 +45,7 @@ def cur_env(request):
         # "Firefox",
         # "Safari",
     ],
-    autouse=True,
+    # autouse=True,
     # ids=pre_go,
 )
 def d(request):
@@ -109,6 +76,7 @@ def d(request):
     print(f'Current browser name: {d.capabilities["browserName"]}')
     # Установка максимального тайм-аута загрузки страницы
     d.set_page_load_timeout(60)
+
     yield d
 
     d.quit()

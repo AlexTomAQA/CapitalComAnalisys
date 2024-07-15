@@ -6,8 +6,8 @@
 DEBUG = False
 QTY_LINKS = 1
 
-HEADLESS = True  # режим браузера без отображения (безголовый)
-# HEADLESS = False  # режим с отображением браузера
+# HEADLESS = True  # режим браузера без отображения (безголовый)
+HEADLESS = False  # режим с отображением браузера
 
 # CHROME_WINDOW_SIZES = "--window-size=1280,720"
 CHROME_WINDOW_SIZES = "--window-size=1920,1080"
