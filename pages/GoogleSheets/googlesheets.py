@@ -33,7 +33,7 @@ class GoogleSheet:
     # If modifying these scopes, delete the file token.json.
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-    SHEET_NAME = 'Analisys'
+    SHEET_NAME = 'CAPITALCOM'
     SHEET_ID = '0'
     service = None
 
@@ -124,10 +124,9 @@ class GoogleSheet:
         return values
 
     @allure.step("Fixing one row check results into Google Sheet Bugs Report")
-    def update_range_values(self, cell='V5', values=""):
+    def update_range_values(self, cell, values=""):
         if values == "":
             values = [[""]]
-        print(f"\n{datetime.now()}   4. Fixing one row check results into Google Sheet Bugs Report =>")
         range_name = f'{self.SHEET_NAME}!{cell}'
         data = [{
             'range': range_name,
@@ -142,7 +141,7 @@ class GoogleSheet:
                   .execute()
                   )
         print('{0} cells updated.'.format(result.get('totalUpdatedCells')))
-        print(f"{datetime.now()}   => 4. One row check results into Google Sheet Bugs Report fixed")
+        print(f"{datetime.now()}   => One row check results into Google Sheet Bugs Report fixed")
         return result
 
     def new_data_copy_past(self,
@@ -232,7 +231,7 @@ class GoogleSheet:
 
         print(f"\n{datetime.now()}   => Новая строка добавлена")
 
-    def add_new_row_before_(self, index_of_row=5):
+    def add_new_row_before_(self, index_of_row=4):
         print(f"\n{datetime.now()}   Добавление новой строки =>")
         if index_of_row is not None:
             request_body = {
@@ -316,3 +315,13 @@ class GoogleSheet:
 
         response = sheet.batchUpdate(spreadsheetId=self.SPREADSHEET_ID, body=date_format_request).execute()
         return response
+
+    def add_new_row_with_format(self):
+        start_update_date = [datetime.now().strftime("%d/%m/%Y %H:%M:%S")]
+        # добавление новой 4-й строки
+        self.add_new_row_before_()
+        # копирование данных из предыдущей строки
+        self.new_data_copy_past(5, 6, 4, 5,
+                                0, 17, 0, 17)
+        # gs.clear_values_new_row()
+        self.update_range_values('U5', [start_update_date])
