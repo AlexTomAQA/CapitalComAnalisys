@@ -56,10 +56,12 @@ class TradingView(BasePage):
 
     def go_to_search_markets_here(self):
 
-        if not self.element_is_visible(TradingViewSiteLocators.BUTTON_SEARCH_MARKETS_HERE, 15):
-            msg = "Проблема с главной кнопкой SEARCH MARKETS"
-            print(msg)
-            pytest.fail(msg)
+        if not self.element_is_visible(TradingViewSiteLocators.BUTTON_SEARCH_MARKETS_HERE, 10):
+            self.driver.refresh()
+            if not self.element_is_visible(TradingViewSiteLocators.BUTTON_SEARCH_MARKETS_HERE, 10):
+                msg = "Проблема с главной кнопкой SEARCH MARKETS"
+                print(msg)
+                pytest.fail(msg)
 
         buttons = self.driver.find_elements(*TradingViewSiteLocators.BUTTON_SEARCH_MARKETS_HERE)
         if len(buttons) == 0:
