@@ -50,10 +50,10 @@ class GoogleSheet:
         if env == 'loc':
             self.path_project = LOC_PATH_PROJECT
         if os.path.exists(
-                self.path_project + "tests/TradingView/Analisys/token.json"
+                self.path_project + "tests/TradingView/Parsing/token.json"
         ):
             self.creds = Credentials.from_authorized_user_file(
-                self.path_project + "tests/TradingView/Analisys/token.json",
+                self.path_project + "tests/TradingView/Parsing/token.json",
                 self.SCOPES)
 
         if not self.creds or not self.creds.valid:
@@ -62,12 +62,12 @@ class GoogleSheet:
             else:
                 print('flow')
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    self.path_project + "tests/TradingView/Analisys/credentials.json",
+                    self.path_project + "tests/TradingView/Parsing/credentials.json",
                     self.SCOPES
                 )
                 self.creds = flow.run_local_server(port=0)
             with open(
-                    self.path_project + "tests/TradingView/Analisys/token.json",
+                    self.path_project + "tests/TradingView/Parsing/token.json",
                     "w") as token:
                 token.write(self.creds.to_json())
 
