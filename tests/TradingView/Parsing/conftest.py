@@ -100,22 +100,22 @@ def gs(cur_env):
     print(f"\n{datetime.now()}   *** end fixture gs => teardown ***\n")
 
 
-@pytest.fixture(
-    scope="module",
-    params=[
-        "File",
-    ],
-)
-def file(request, cur_env):
-    """File Initialization"""
-    path_project = ""
-    if cur_env == 'loc':
-        path_project = LOC_PATH_PROJECT
-
-    file_name = path_project + "tests/TradingView/result.txt"
-    file = open(file_name, "w")
-
-    yield file
-
-    file.close()
-    print("*** The end file fixture => teardown ***\n")
+# @pytest.fixture(
+#     scope="module",
+#     params=[
+#         "File",
+#     ],
+# )
+# def file(request, cur_env):
+#     """File Initialization"""
+#     path_project = ""
+#     if cur_env == 'loc':
+#         path_project = LOC_PATH_PROJECT
+#
+#     file_name = path_project + "tests/TradingView/result.txt"
+#     file = open(file_name, "w")
+#
+#     yield file
+#
+#     file.close()
+#     print("*** The end file fixture => teardown ***\n")

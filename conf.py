@@ -7,8 +7,8 @@ DEBUG = False
 QTY_LINKS = 1
 LOC_PATH_PROJECT = "/home/atom/Projects/CapitalComAnalisys/"
 
-# HEADLESS = True  # режим браузера без отображения (безголовый)
-HEADLESS = False  # режим с отображением браузера
+HEADLESS = True  # режим браузера без отображения (безголовый)
+# HEADLESS = False  # режим с отображением браузера
 
 # CHROME_WINDOW_SIZES = "--window-size=1280,720"
 CHROME_WINDOW_SIZES = "--window-size=1920,1080"
