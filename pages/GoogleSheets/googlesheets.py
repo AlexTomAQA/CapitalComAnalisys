@@ -9,10 +9,12 @@ import time
 from datetime import datetime
 
 import allure
+# import googleapiclient.http
 from google.auth.transport.requests import Request
+
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-# import googleapiclient.discovery
+
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
@@ -22,6 +24,11 @@ from conf import LOC_PATH_PROJECT
 # PATH_PROJECT = ""
 # PATH_PROJECT = "/home/atom/Projects/CapitalComAnalisys/"
 SPREADSHEET_ID = "1ssLb5gFzDUwWEjJZhUggls-uyAIysNeajW7p0hdZY8E"  # Place of Capital.Com in the traders top list
+
+
+# class Learn():
+#     pass
+#     # googleapiclient.discovery.
 
 
 class GoogleSheet:
@@ -138,16 +145,17 @@ class GoogleSheet:
             'data': data
         }
 
-        result = self.service.spreadsheets().values().batchUpdate(spreadsheetId=self.SPREADSHEET_ID, body=body).execute()
+        result = (self.service.spreadsheets().values().
+                  batchUpdate(spreadsheetId=self.SPREADSHEET_ID, body=body).execute())
         print('{0} cells updated.'.format(result.get('totalUpdatedCells')))
         print(f"{datetime.now()}   => One row check results into Google Sheet Bugs Report fixed")
         return result
 
     def new_data_copy_past(self,
-                           source_startRowIndex=5, source_endRowIndex=6,
-                           destination_startRowIndex=4, destination_endRowIndex=5,
-                           source_startColumnIndex=0, source_endColumnIndex=17,
-                           destination_startColumnIndex=0, destination_endColumnIndex=17):
+                           source_start_row_index=5, source_end_row_index=6,
+                           destination_start_row_index=4, destination_end_row_index=5,
+                           source_start_column_index=0, source_end_column_index=17,
+                           destination_start_column_index=0, destination_end_column_index=17):
         sheet = self.service.spreadsheets()
 
         # Копирование формул и форматирования из предыдущего диапазона
@@ -157,17 +165,17 @@ class GoogleSheet:
                     "copyPaste": {
                         "source": {
                             "sheetId": self.SHEET_ID,
-                            "startRowIndex": source_startRowIndex,
-                            "endRowIndex": source_endRowIndex,  # end-start=количество строк
-                            "startColumnIndex": source_startColumnIndex,
-                            "endColumnIndex": source_endColumnIndex  # end-start=количество столбцов
+                            "startRowIndex": source_start_row_index,
+                            "endRowIndex": source_end_row_index,  # end-start=количество строк
+                            "startColumnIndex": source_start_column_index,
+                            "endColumnIndex": source_end_column_index  # end-start=количество столбцов
                         },
                         "destination": {
                             "sheetId": self.SHEET_ID,
-                            "startRowIndex": destination_startRowIndex,
-                            "endRowIndex": destination_endRowIndex,  # end-start=количество строк
-                            "startColumnIndex": destination_startColumnIndex,
-                            "endColumnIndex": destination_endColumnIndex  # end-start=количество столбцов
+                            "startRowIndex": destination_start_row_index,
+                            "endRowIndex": destination_end_row_index,  # end-start=количество строк
+                            "startColumnIndex": destination_start_column_index,
+                            "endColumnIndex": destination_end_column_index  # end-start=количество столбцов
                         },
                         "pasteType": "PASTE_NORMAL"  # Копирование формул
                     }
@@ -259,8 +267,8 @@ class GoogleSheet:
         pass
 
     def clear_values(self,
-                     range_startRowIndex=1, range_endRowIndex=1,
-                     range_startColumnIndex=1, range_endColumnIndex=1):
+                     range_start_row_index=1, range_end_row_index=1,
+                     range_start_column_index=1, range_end_column_index=1):
 
         sheet = self.service.spreadsheets()
 
@@ -271,10 +279,10 @@ class GoogleSheet:
                     "updateCells": {
                         "range": {
                             "sheetId": self.SHEET_ID,
-                            "startRowIndex": range_startRowIndex,
-                            "endRowIndex": range_endRowIndex,
-                            "startColumnIndex": range_startColumnIndex,
-                            "endColumnIndex": range_endColumnIndex
+                            "startRowIndex": range_start_row_index,
+                            "endRowIndex": range_end_row_index,
+                            "startColumnIndex": range_start_column_index,
+                            "endColumnIndex": range_end_column_index
                         },
                         "fields": "userEnteredValue"  # Очистка только значений
                     }
