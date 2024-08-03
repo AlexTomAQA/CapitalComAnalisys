@@ -35,5 +35,5 @@ jobs:
       - name: 8. Run Markets parsing
         if: always()
 #        run: poetry run pytest --no-summary -vv --env=github tests/TradingView/Parsing/markets_parsing.py
-        run: poetry run pytest -vv --env=github tests/TradingView/Parsing/markets_parsing.py
+        run: poetry run pytest -s -vv --env=github tests/TradingView/Parsing/markets_parsing.py
         continue-on-error: true

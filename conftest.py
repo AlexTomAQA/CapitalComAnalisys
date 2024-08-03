@@ -40,9 +40,9 @@ def pytest_addoption(parser):
     # scope="module",
     scope="session",
     params=[
-        "Chrome",
+        # "Chrome",
         # "Edge",
-        # "Firefox",
+        "Firefox",
         # "Safari",
     ],
     # autouse=True,
@@ -61,7 +61,6 @@ def d(request):
     d = None
     if test_browser == "Chrome":
         d = init_remote_driver_chrome()
-        # d = init_remote_driver_chrome_v2(cur_headless)
     elif test_browser == "Edge":
         d = init_remote_driver_edge()
     elif test_browser == "Firefox":
@@ -121,29 +120,6 @@ def init_remote_driver_chrome():
     driver.implicitly_wait(1)
     driver.set_script_timeout(20000)
 
-    return driver
-
-
-def init_remote_driver_chrome_v2(headless):
-    chrome_options = webdriver.ChromeOptions()
-
-    chrome_options.page_load_strategy = "normal"
-
-    chrome_options.add_argument(conf.CHROME_WINDOW_SIZES)
-
-    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    chrome_options.add_argument("--accept-lang=en")
-
-    # !!!
-    # безголовый режим задается переменной headless в самом начале текущего модуля
-    if headless:
-        chrome_options.add_argument(conf.CHROMIUM_HEADLESS)
-
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
-
-    print(driver.get_window_size())
-    driver.implicitly_wait(1)
-    driver.set_script_timeout(20000)
     return driver
 
 
