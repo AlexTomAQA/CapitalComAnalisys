@@ -6,20 +6,22 @@
 # import sys
 import os
 from datetime import datetime
-# import re
-# import platform
-# import random
 
 import pytest
 import allure
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.edge.service import Service as EdgeService
-from selenium.webdriver.firefox.service import Service as FirefoxService
 from allure_commons.types import AttachmentType
+
+from selenium import webdriver
+from selenium.webdriver.edge.service import Service as EdgeService
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.edge.options import Options
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
+
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
+
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 import conf
 
@@ -124,22 +126,38 @@ def init_remote_driver_chrome():
 
 
 def init_remote_driver_edge():
-    edge_options = webdriver.EdgeOptions()
+    # Вариант 1
+    driver = None
+    variant = 1
+    if variant == 1:
+        edge_options = webdriver.EdgeOptions()
+        edge_options.page_load_strategy = 'normal'
+        # edge_options.page_load_strategy = "eager"
 
-    edge_options.page_load_strategy = 'normal'
-    # edge_options.page_load_strategy = "eager"
+        # edge_options.add_argument(conf.WINDOW_SIZES)
+        # edge_options.add_argument(conf.CHROMIUM_WINDOW_WIDTH)
+        # edge_options.add_argument(conf.CHROMIUM_WINDOW_HEIGHT)
 
-    # edge_options.add_argument(conf.WINDOW_SIZES)
-    edge_options.add_argument(conf.CHROMIUM_WINDOW_WIDTH)
-    edge_options.add_argument(conf.CHROMIUM_WINDOW_HEIGHT)
+        # !!!
+        # безголовый режим браузера задается переменной headless, задаваемой в самом начале
+        if conf.HEADLESS:
+            edge_options.add_argument(conf.CHROMIUM_HEADLESS)
 
-    # !!!
-    # безголовый режим браузера задается переменной headless, задаваемой в самом начале
-    if conf.HEADLESS:
-        edge_options.add_argument(conf.CHROMIUM_HEADLESS)
+        driver = webdriver.Edge(
+            service=EdgeService(EdgeChromiumDriverManager().install()), options=edge_options
+        )
+    elif variant == 2:
+        edge_options = Options()
+        edge_options.binary_location = ""
 
-    driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()), options=edge_options)
+        service = Service(verbose=True)
+        driver = webdriver.Edge(service=service)
 
+    elif variant == 3:
+        pass
+
+    driver.set_window_position(0, 0)
+    driver.set_window_size(1280, 720)
     print(driver.get_window_size())
     driver.implicitly_wait(5)
 
