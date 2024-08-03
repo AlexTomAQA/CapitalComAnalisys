@@ -41,8 +41,8 @@ def pytest_addoption(parser):
     scope="session",
     params=[
         # "Chrome",
-        # "Edge",
-        "Firefox",
+        "Edge",
+        # "Firefox",
         # "Safari",
     ],
     # autouse=True,
