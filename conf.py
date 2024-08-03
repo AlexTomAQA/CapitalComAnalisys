@@ -5,7 +5,7 @@
 """
 DEBUG = False
 QTY_LINKS = 1
-LOC_PATH_PROJECT = "/home/atom/Projects/CapitalComAnalisys/"
+LOC_PATH_PROJECT = "/home/atom/ProjectsPy/CapitalComAnalisys/"
 
 HEADLESS = True  # режим браузера без отображения (безголовый)
 # HEADLESS = False  # режим с отображением браузера
@@ -34,5 +34,7 @@ BROWSER_HEADLESS = True  # not visible
 # options parameters
 CHROMIUM_HEADLESS = "--headless=new"  # not visible
 WINDOW_SIZES = "--window-size=1920,1080"
-CHROMIUM_WINDOW_WIDTH = "--width=1280"
-CHROMIUM_WINDOW_HEIGHT = "--height=720"
+# CHROMIUM_WINDOW_WIDTH = "--width=1280"
+# CHROMIUM_WINDOW_HEIGHT = "--height=720"
+CHROMIUM_WINDOW_WIDTH = "--width=1920"
+CHROMIUM_WINDOW_HEIGHT = "--height=1080"
